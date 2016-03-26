@@ -4,4 +4,4 @@ I might as well waste my time learning something! More seriously I'm very intere
 
 ## 1 - Recursive polygons
 
-![polygons](screenshots/recursive_polygons.png)
+![polygons](screenshots/1_recursive_polygons.png)
