@@ -1,0 +1,137 @@
+<canvas id="doodle" width="1400" height="900" style="border:3px solid #000000;"></canvas>
+
+<script type="text/javascript">
+class Point {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+function createBoundingBox(n, width, height, center) {
+    // The bounding box points is generated with the trigonometric circle
+    var radians = [];
+    for (i = 0; i < n; i++) {
+        radians[i] = (i / n) * (2 * Math.PI);
+    }
+    // Bounding box coordinates
+    var box = [];
+    // Starting point
+    box[0] = new Point(center.x + width * Math.cos(radians[0]), center.y);
+    // Complete the bounding box
+    for (i = 1; i < n; i++) {
+        box[i] = new Point();
+        box[i].x = center.x + width * Math.cos(radians[i]);
+        box[i].y = center.y + height * Math.sin(radians[i]);
+    }
+    return box
+}
+
+function createConvexPolygon(box) {
+    var polygon = [];
+    // Complete the polygon
+    for (i = 0; i < box.length; i++) {
+        polygon[i] = new Point();
+        var r = Math.random();
+        // Use the modulo operator for cycling through the array
+        polygon[i].x = box[i].x + r * (box[(i+1) % box.length].x - box[i].x);
+        polygon[i].y = box[i].y + r * (box[(i+1) % box.length].y - box[i].y);
+    }
+    return polygon
+}
+
+function drawPolygon(ctx, polygon) {
+    // Draw the outline of the polygon
+    ctx.moveTo(polygon[0].x, polygon[0].y);
+    for (i = 1; i <= polygon.length; i++) {
+        ctx.lineTo(polygon[i % polygon.length].x, polygon[i % polygon.length].y);
+    }
+    // Go to the end of the polygon
+    ctx.moveTo(polygon[polygon.length-1].x, polygon[polygon.length-1].y);
+    // Start doodling
+    for (i = 0; i < 500; i++) {
+        var r = 0.1;
+        var x = polygon[i].x + r * (polygon[i+1].x - polygon[i].x);
+        var y = polygon[i].y + r * (polygon[i+1].y - polygon[i].y);
+        ctx.lineTo(x, y);
+        polygon[polygon.length] = new Point(x, y);
+    }
+    // Go to the end of the polygon
+    ctx.moveTo(polygon[0].x, polygon[0].y);
+}
+
+// Begin
+var c = document.getElementById("doodle"),
+    ctx = c.getContext("2d");
+ctx.beginPath();
+// Canvas geometry
+var center = new Point(c.width / 2, c.height / 2);
+var height = c.height;
+var width = c.width;
+// Polygon size
+var n = 6;
+// Bounding box
+var box = createBoundingBox(n, width / 3, height / 3, center);
+// Initial polygon
+var polygon = createConvexPolygon(box);
+// Draw the polygon
+drawPolygon(ctx, polygon);
+
+
+var a = [
+    new Point(polygon[0].x, polygon[0].y),
+    new Point(width, polygon[0].y),
+    new Point(width, height),
+    new Point(polygon[1].x, height),
+    new Point(polygon[1].x, polygon[1].y)
+]
+
+drawPolygon(ctx, a);
+
+var b = [
+    new Point(polygon[1].x, polygon[1].y),
+    new Point(polygon[1].x, height),
+    new Point(0, height),
+    new Point(0, polygon[2].y),
+    new Point(polygon[2].x, polygon[2].y)
+]
+drawPolygon(ctx, b);
+
+var c = [
+    new Point(polygon[2].x, polygon[2].y),
+    new Point(0, polygon[2].y),
+    new Point(0, polygon[3].y),
+    new Point(polygon[3].x, polygon[3].y)
+]
+drawPolygon(ctx, c);
+
+var e = [
+    new Point(polygon[3].x, polygon[3].y),
+    new Point(0, polygon[3].y),
+    new Point(0, 0),
+    new Point(polygon[4].x, 0),
+    new Point(polygon[4].x, polygon[4].y)
+]
+drawPolygon(ctx, e);
+
+
+var f = [
+    new Point(polygon[4].x, polygon[4].y),
+    new Point(polygon[4].x, 0),
+    new Point(width, 0),
+    new Point(width, polygon[5].y),
+    new Point(polygon[5].x, polygon[5].y)
+]
+drawPolygon(ctx, f);
+
+
+var g = [
+    new Point(polygon[5].x, polygon[5].y),
+    new Point(width, polygon[5].y),
+    new Point(width, polygon[0].y),
+    new Point(polygon[0].x, polygon[0].y)
+]
+drawPolygon(ctx, g);
+
+ctx.stroke();
+</script>
