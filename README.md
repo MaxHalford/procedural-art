@@ -1,6 +1,6 @@
-# Modern art with JavaScript
+# art/doodling
 
-I might as well waste my time learning something! More seriously I'm very interested in Modern Art. When I have time I'll try and sketch some things in JavaScript.
+> Time you enjoy wasting isn't wasted time.
 
 ## [1 - Recursive polygons](https://maxhalford.github.io/blog/art-1/)
 
