@@ -1,4 +1,4 @@
-# art/doodling
+# Art, or doodling, call it what you want
 
 > Time you enjoy wasting isn't wasted time.
 
