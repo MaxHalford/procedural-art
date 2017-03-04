@@ -1,4 +1,4 @@
-# Art, or doodling, call it what you want
+# Procedural art with JavaScript
 
 > Time you enjoy wasting isn't wasted time.
 
