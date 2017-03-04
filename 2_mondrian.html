@@ -1,0 +1,91 @@
+<canvas id="doodle" width="800" height="600" style="border:2px solid #000000;"></canvas>
+
+<script type="text/javascript">
+function randInt(min, max) {
+    return Math.floor(Math.random() * (max - min) + min)
+}
+
+class Point {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+var colors = [
+    'white',
+    'white',
+    'white',
+    'red',
+    'blue',
+    'yellow'
+]
+
+class Rectangle {
+    constructor(min, max) {
+        this.min = min
+        this.max = max
+    }
+
+    get width() {
+        return this.max.x - this.min.x
+    }
+
+    get height() {
+        return this.max.y - this.min.y
+    }
+
+    draw(ctx) {
+        // Draw clockwise
+        ctx.moveTo(this.min.x, this.min.y)
+        ctx.lineTo(this.max.x, this.min.y)
+        ctx.lineTo(this.max.x, this.max.y)
+        ctx.lineTo(this.min.x, this.max.y)
+        ctx.lineTo(this.min.x, this.min.y)
+    }
+
+    break(xPad, yPad, depth, limit, ctx) {
+
+        ctx.fillStyle = colors[randInt(0, colors.length)]
+        ctx.fillRect(this.min.x, this.min.y, this.max.x, this.max.y)
+        this.draw(ctx)
+
+        if (depth == limit) {
+            return
+        }
+
+        if (this.width < 2 * xPad || this.height < 2 *yPad) {
+            return
+        }
+
+        if (this.width > this.height) {
+            var x = randInt(this.min.x + xPad, this.max.x - xPad)
+            var r1 = new Rectangle(this.min, new Point(x, this.max.y))
+            var r2 = new Rectangle(new Point(x, this.min.y), this.max)
+        } else {
+            var y = randInt(this.min.y + yPad, this.max.y - yPad)
+            var r1 = new Rectangle(this.min, new Point(this.max.x, y))
+            var r2 = new Rectangle(new Point(this.min.x, y), this.max)
+        }
+
+        r1.break(xPad, yPad, depth+1, limit, ctx)
+        r2.break(xPad, yPad, depth+1, limit, ctx)
+    }
+}
+
+// Begin
+var c = document.getElementById("doodle")
+var ctx = c.getContext("2d")
+ctx.beginPath()
+ctx.lineWidth = 4
+
+var xPad = Math.floor(c.width * 0.1)
+var yPad = Math.floor(c.height * 0.1)
+
+var initialRect = new Rectangle(new Point(0, 0), new Point(c.width, c.height))
+
+initialRect.break(xPad, yPad, 0, 5, ctx)
+
+ctx.stroke();
+
+</script>
