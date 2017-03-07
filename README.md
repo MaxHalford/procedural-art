@@ -6,11 +6,13 @@ This repository contains some procedural art algorithms I like devising during m
 
 ## 1 - Recursive polygons
 
-[Blog post](https://maxhalford.github.io/blog/art-1/)
+[Explanatory blog post](https://maxhalford.github.io/blog/recursive-polygons/)
 
 ![1_recursive_polygons](screenshots/1_recursive_polygons.png)
 
 ## 2 - Mondrian
+
+[Explanatory blog post](https://maxhalford.github.io/blog/mondrian/)
 
 ![2_mondrian](screenshots/2_mondrian.png)
 
