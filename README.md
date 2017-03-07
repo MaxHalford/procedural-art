@@ -13,3 +13,7 @@ This repository contains some procedural art algorithms I like devising during m
 ## 2 - Mondrian
 
 ![2_mondrian](screenshots/2_mondrian.png)
+
+## License
+
+The MIT License (MIT). Please see the [license file](LICENSE) for more information.
