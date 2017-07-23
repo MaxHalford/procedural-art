@@ -4,17 +4,17 @@
 
 This repository contains some procedural art algorithms I like devising during my spare time. I don't use any external libraries and I rely on the HTML `<canvas>` element for rendering.
 
-## 1 - Recursive polygons
+## [1 - Recursive polygons](https://maxhalford.github.io/blog/recursive-polygons/)
 
-[Explanatory blog post](https://maxhalford.github.io/blog/recursive-polygons/)
+<div align="center">
+    <img width="60%" src="screenshots/1_recursive_polygons.png" alt="recursive_polygons">
+</div>
 
-![1_recursive_polygons](screenshots/1_recursive_polygons.png)
+## [2 - Mondrian](https://maxhalford.github.io/blog/mondrian/)
 
-## 2 - Mondrian
-
-[Explanatory blog post](https://maxhalford.github.io/blog/mondrian/)
-
-![2_mondrian](screenshots/2_mondrian.png)
+<div align="center">
+    <img width="60%" src="screenshots/2_mondrian.png" alt="recursive_polygons">
+</div>
 
 ## License
 
