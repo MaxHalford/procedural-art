@@ -2,7 +2,7 @@
 
 > Time you enjoy wasting isn't wasted time.
 
-This repository contains some procedural art algorithms I like devising during my spare time. I don't use any external libraries and I rely on the HTML `<canvas>` element for rendering.
+This repository contains some procedural art algorithms I like devising during my spare time. I don't use any external libraries and I rely on the HTML `<canvas>` element for rendering. Every time you open of the `html` files it will generate a random image.
 
 ## [1 - Recursive polygons](https://maxhalford.github.io/blog/recursive-polygons/)
 
