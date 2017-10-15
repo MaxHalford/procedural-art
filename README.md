@@ -16,7 +16,7 @@ This repository contains some procedural art algorithms I like devising during m
     <img width="60%" src="screenshots/2_mondrian.png" alt="mondrian">
 </div>
 
-## [3 - Unknown pleasures](https://maxhalford.github.io/blog/unknown_pleasures/)
+## [3 - Unknown pleasures](https://maxhalford.github.io/blog/unknown-pleasures/)
 
 <div align="center">
     <img width="60%" src="screenshots/3_unknown_pleasures.png" alt="unknown_pleasures">
