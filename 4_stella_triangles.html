@@ -1,0 +1,98 @@
+<canvas id="doodle" width="900" height="600" style="border:3px solid #000000;"></canvas>
+
+<script type="text/javascript">
+class Point {
+  constructor (x, y) {
+    this.x = x
+    this.y = y
+  }
+}
+
+class Triangle {
+  constructor (a, b, c, angle, height) {
+    this.a = a
+    this.b = b
+    this.c = c
+    this.angle = angle
+    this.height = height
+  }
+
+  draw (ctx, color, steps, stepSize, lineWidth) {
+    ctx.strokeStyle = 'white'
+    ctx.lineWidth = lineWidth
+    ctx.beginPath();
+    ctx.moveTo(this.a.x, this.a.y)
+    ctx.lineTo(this.b.x, this.b.y)
+    ctx.lineTo(this.c.x, this.c.y)
+    ctx.lineTo(this.a.x, this.a.y)
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.stroke();
+    ctx.closePath();
+
+    var height = Math.sqrt(Math.pow(this.height, 2)) - this.height / 2
+    var d = new Point((this.b.x + this.c.x) / 2, (this.b.y + this.c.y) / 2)
+
+    // Draw inner lines
+    ctx.strokeStyle = 'white'
+    ctx.lineWidth = lineWidth
+
+    for (var i = 1; i <= steps; i++) {
+      var r = (stepSize * i) / height
+      var c = new Point(
+        this.a.x + (d.x - this.a.x) * r,
+        this.a.y + (d.y - this.a.y) * r,
+      )
+      var innerTriangle = newTriangle(c, this.angle, this.height - r * this.height)
+      ctx.beginPath();
+      ctx.moveTo(innerTriangle.a.x, innerTriangle.a.y)
+      ctx.lineTo(innerTriangle.b.x, innerTriangle.b.y)
+      ctx.moveTo(innerTriangle.a.x, innerTriangle.a.y)
+      ctx.lineTo(innerTriangle.c.x, innerTriangle.c.y)
+      ctx.stroke();
+      ctx.closePath();
+    }
+
+    // Draw white hollow part
+
+    var r = (stepSize * steps) / height
+    var c = new Point(
+      this.a.x + (d.x - this.a.x) * r,
+      this.a.y + (d.y - this.a.y) * r,
+    )
+    var innerTriangle = newTriangle(c, this.angle, this.height - r * this.height)
+    ctx.beginPath();
+    ctx.moveTo(innerTriangle.a.x, innerTriangle.a.y)
+    ctx.lineTo(innerTriangle.b.x, innerTriangle.b.y)
+    ctx.lineTo(innerTriangle.c.x, innerTriangle.c.y)
+    ctx.lineTo(innerTriangle.a.x, innerTriangle.a.y)
+    ctx.fillStyle = 'white';
+    ctx.fill();
+    ctx.closePath();
+  }
+}
+
+function degreesToRadians(angle) {
+  return angle * Math.PI / 180
+}
+
+function newTriangle(center, angle, height) {
+  var b = new Point(
+    height * Math.cos(degreesToRadians(angle - 30)) + center.x,
+    height * Math.sin(degreesToRadians(angle - 30)) + center.y
+  )
+  var c = new Point(
+    height * Math.cos(degreesToRadians(angle + 30)) + center.x,
+    height * Math.sin(degreesToRadians(angle + 30)) + center.y
+  )
+  return new Triangle(center, b, c, angle, height)
+}
+
+// Begin drawing
+var canvas = document.getElementById('doodle')
+var ctx = canvas.getContext('2d')
+
+newTriangle(new Point(450, 100), -210, 400).draw(ctx, '#36738a', 8, 15, 3)
+newTriangle(new Point(450, 100), -270, 400).draw(ctx, '#46736c', 8, 15, 3)
+newTriangle(new Point(450, 100), -330, 400).draw(ctx, '#483e59', 8, 15, 3)
+</script>
