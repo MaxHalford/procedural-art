@@ -28,7 +28,7 @@ This repository contains some procedural art algorithms I like devising during m
     <img width="60%" src="screenshots/4_stella_triangles.png" alt="4_stella_triangles">
 </div>
 
-## [4 - Morellet crosses](https://maxhalford.github.io/blog/morellet-crosses-with-javascript/)
+## [5 - Morellet crosses](https://maxhalford.github.io/blog/morellet-crosses-with-javascript/)
 
 <div align="center">
     <img width="60%" src="screenshots/5_morellet_crosses.png" alt="5_morellet_crosses">
