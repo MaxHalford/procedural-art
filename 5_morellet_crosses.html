@@ -1,0 +1,127 @@
+<canvas id="doodle" width="800" height="800" style="border:3px solid #000000;"></canvas>
+
+<script type="text/javascript">
+class Point {
+  constructor (x, y) {
+    this.x = x
+    this.y = y
+  }
+}
+
+class Square {
+  constructor (origin, length, colour) {
+    this.origin = origin
+    this.length = length
+    this.colour = colour
+  }
+
+  draw (ctx) {
+    // Draw clockwise
+    ctx.beginPath()
+    ctx.moveTo(this.origin.x, this.origin.y)
+    ctx.lineTo(this.origin.x + this.length, this.origin.y)
+    ctx.lineTo(this.origin.x + this.length, this.origin.y + this.length)
+    ctx.lineTo(this.origin.x, this.origin.y + this.length)
+    ctx.lineTo(this.origin.x, this.origin.y)
+    // We want the border color and the fill color to match
+    ctx.strokeStyle = this.colour;
+    ctx.fillStyle = this.colour;
+    // Color the border and the body
+    ctx.stroke();
+    ctx.fill();
+    ctx.closePath();
+  }
+}
+
+class Cross {
+  constructor (left, top, right, bottom, center) {
+    this.left = left
+    this.top = top
+    this.right = right
+    this.bottom = bottom
+    this.center = center
+  }
+
+  draw (ctx) {
+    this.left.draw(ctx);
+    this.top.draw(ctx);
+    this.right.draw(ctx);
+    this.bottom.draw(ctx);
+    this.center.draw(ctx);
+  }
+}
+
+function makeCross(center, squareLength, color) {
+  // For convenience
+  var l = squareLength
+  var x = center.x
+  var y = center.y
+  // The position of each square can be guessed from the center of the cross
+  var left   = new Square(new Point(x - 1.5 * l, y - 0.5 * l), l, color)
+  var top    = new Square(new Point(x - 0.5 * l, y - 1.5 * l), l, color)
+  var right  = new Square(new Point(x + 0.5 * l, y - 0.5 * l), l, color)
+  var bottom = new Square(new Point(x - 0.5 * l, y + 0.5 * l), l, color)
+  var center = new Square(new Point(x - 0.5 * l, y - 0.5 * l), l, color)
+  // Assemble the squares and return the resulting cross
+  return new Cross(left, top, right, bottom, center)
+}
+
+function drawRow(start, squareLength, color1, color2, ctx) {
+  var x = start.x
+  var y = start.y
+  var i = 0
+  while (true) {
+    var color = [color1, color2][i % 2]
+    makeCross(new Point(x, y), squareLength, color).draw(ctx)
+    if (x > 800) { break }
+    x = x + 5 * squareLength
+    i = i + 1
+  }
+}
+
+var squareLength = 800 / 16
+
+var blue = '#006597'
+var orange = '#ff5c30'
+
+var yellow = '#ffd652'
+var purple =  '#562b42'
+
+var red = '#df2933'
+var green = '#177b4b'
+
+var canvas = document.getElementById('doodle')
+var ctx = canvas.getContext('2d')
+
+var x = 1.5 * squareLength
+var y = -0.5 * squareLength
+var i = 0
+var j = 5
+var rc = 0
+var colors = [purple, blue, green, yellow, orange, red]
+var mirror = [yellow, orange, red, purple, blue, green]
+
+while (true) {
+  if (rc % 2 == 0) {
+    var idx = i
+    i = (i + 1) % 6
+  } else {
+    var idx = j
+    j = (j + 1) % 6
+  }
+  var color1 = colors[idx]
+  var color2 = mirror[idx]
+  drawRow(new Point(x, y), squareLength, color1, color2, ctx)
+  // Stop if we've gone past the bottom of the canvas
+  if (y > 800) { break }
+  // Update the first cross coordinates and the row counter
+  if (rc % 2 == 0) {
+    x = x - 3 * squareLength
+  } else {
+    x = x + 2 * squareLength
+  }
+  y = y + 1 * squareLength
+  rc = rc + 1
+}
+
+</script>
